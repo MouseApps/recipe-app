@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    gcp:
+      firestore:
+        project:
+           id: dashboard-217412
