@@ -3,4 +3,4 @@ spring:
     gcp:
       firestore:
         project:
-           id: dashboard-217412
+           id: malouf-recipes

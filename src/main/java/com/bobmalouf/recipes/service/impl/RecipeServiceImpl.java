@@ -11,6 +11,7 @@ import com.bobmalouf.recipes.repository.RecipeRepository;
 import com.bobmalouf.recipes.service.RecipeService;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * @author bmalouf
@@ -29,5 +30,35 @@ public class RecipeServiceImpl implements RecipeService {
 	public Flux<Recipe> getRecipes() {
 		return this.rr.findAll();
 	}
+	
+	public Mono<Recipe> getRecipe(final String idIn) {
+		return this.rr.findById(idIn);
+	}
+
+	public Mono<Recipe> createRecipe(final Recipe r) throws Exception {
+		Mono<Recipe> temp = this.getRecipe(r.getTitle());
+		
+		if(temp != null) {
+			throw new Exception("already exists");
+		}
+		return this.rr.save(r);
+	}
+
+	@Override
+	public Mono<Recipe> updateRecipe(Recipe r) throws Exception {
+		Mono<Recipe> temp = this.getRecipe(r.getTitle());
+		
+		if(temp == null) {
+			throw new Exception("doenst exist");
+		}
+		return this.rr.save(r);
+	}
+
+	@Override
+	public boolean deleteRecipe(String idIn) {
+		this.rr.deleteById(idIn);
+		return true;
+	}
+	
 
 }
