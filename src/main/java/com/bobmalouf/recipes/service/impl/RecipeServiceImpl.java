@@ -35,23 +35,25 @@ public class RecipeServiceImpl implements RecipeService {
 		return this.rr.findById(idIn);
 	}
 
-	public Mono<Recipe> createRecipe(final Recipe r) throws Exception {
-		Mono<Recipe> temp = this.getRecipe(r.getTitle());
-		
-		if(temp != null) {
-			throw new Exception("already exists");
-		}
+	public Mono<Recipe> createRecipe(final Recipe r) {
 		return this.rr.save(r);
 	}
 
 	@Override
 	public Mono<Recipe> updateRecipe(Recipe r) throws Exception {
-		Mono<Recipe> temp = this.getRecipe(r.getTitle());
+		Mono<Recipe> recipe = Mono.create(a -> {
+			
+			this.getRecipe(r.getTitle()).subscribe(b -> {
+				if(b == null) {
+					a.error(new Exception("Does exist"));
+				} else {
+					a.success(this.createRecipe(r).block());
+				}
+			});
+			
+		});
 		
-		if(temp == null) {
-			throw new Exception("doenst exist");
-		}
-		return this.rr.save(r);
+		return recipe;
 	}
 
 	@Override
@@ -59,6 +61,5 @@ public class RecipeServiceImpl implements RecipeService {
 		this.rr.deleteById(idIn);
 		return true;
 	}
-	
 
 }
