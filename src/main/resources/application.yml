@@ -4,3 +4,6 @@ spring:
       firestore:
         project:
            id: malouf-recipes
+server:
+   servlet:
+      contextPath: /api
