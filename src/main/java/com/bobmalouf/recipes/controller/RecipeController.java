@@ -3,6 +3,8 @@
  */
 package com.bobmalouf.recipes.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bobmalouf.recipes.model.Recipe;
 import com.bobmalouf.recipes.service.RecipeService;
-
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * @author bmalouf
@@ -33,28 +32,28 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipes")
-	private Flux<Recipe> getAllRecipes(){
+	private List<Recipe> getAllRecipes(){
 		return this.rs.getRecipes();
 	}
 	
-	@GetMapping("/recipes/{name}")
-	private Mono<Recipe> getRecipeByName(@PathVariable("name") final String name){
-		return this.rs.getRecipe(name);
+	@GetMapping("/recipes/{id}")
+	private Recipe getRecipeByName(@PathVariable("id") final String id){
+		return this.rs.getRecipe(id);
 	}
 	
 	@PostMapping("/recipes")
-	private Mono<Recipe> createRecipe(@RequestBody final Recipe r) throws Exception{
+	private Recipe createRecipe(@RequestBody final Recipe r) throws Exception{
 		return this.rs.createRecipe(r);
 	}
 
 	@PutMapping("/recipes")
-	private Mono<Recipe> updateRecipe(@RequestBody final Recipe r) throws Exception{
+	private Recipe updateRecipe(@RequestBody final Recipe r) throws Exception{
 		return this.rs.updateRecipe(r);
 	}
 	
-	@DeleteMapping("/recipes/{name}")
-	private boolean deleteRecipe(@PathVariable("name") final String name){
-		return this.rs.deleteRecipe(name);
+	@DeleteMapping("/recipes/{id}")
+	private boolean deleteRecipe(@PathVariable("id") final String id){
+		return this.rs.deleteRecipe(id);
 	}
 	
 }

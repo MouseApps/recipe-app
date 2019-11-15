@@ -1,9 +1,3 @@
-spring:
-  cloud:
-    gcp:
-      firestore:
-        project:
-           id: malouf-recipes
 server:
    servlet:
       contextPath: /api
