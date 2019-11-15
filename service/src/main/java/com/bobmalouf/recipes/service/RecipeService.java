@@ -4,10 +4,10 @@
 package com.bobmalouf.recipes.service;
 
 
-import com.bobmalouf.recipes.model.Recipe;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import com.bobmalouf.recipes.model.Recipe;
 
 
 /**
@@ -16,13 +16,13 @@ import reactor.core.publisher.Mono;
  */
 public interface RecipeService {
 	
-	Flux<Recipe> getRecipes();
+	List<Recipe> getRecipes();
 	
-	Mono<Recipe> getRecipe(final String idIn);
+	Recipe getRecipe(final String idIn);
 	
-	Mono<Recipe> createRecipe(final Recipe r) throws Exception;
+	Recipe createRecipe(final Recipe r);
 	
-	Mono<Recipe> updateRecipe(final Recipe r) throws Exception;
+	Recipe updateRecipe(final Recipe r) throws NoSuchElementException;
 	
 	boolean deleteRecipe(final String idIn);
 
