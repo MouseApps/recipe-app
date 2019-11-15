@@ -30,7 +30,7 @@ public class Recipe implements DynamoIndexable {
 	@Override
 	public String toString() {
 		return "Recipe [id=" + id + ", name=" + name + ", ingredients=" + ingredients + ", directions=" + directions
-				+ ", tags=" + tags + ", revision=" + revision + "]";
+				+ ", tags=" + tags + ", revision=" + version + "]";
 	}
 	/**
 	 * @param id the id to set
@@ -50,9 +50,21 @@ public class Recipe implements DynamoIndexable {
 	@DynamoDBAttribute
 	private List<String> tags;
 	@DynamoDBVersionAttribute
-	private Long revision;
+	private Long version;
 	
 
+	/**
+	 * @return the version
+	 */
+	public Long getVersion() {
+		return version;
+	}
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(Long version) {
+		this.version = version;
+	}
 	/**
 	 * @return the name
 	 */
