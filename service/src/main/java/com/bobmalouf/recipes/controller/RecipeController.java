@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bobmalouf.recipes.model.Recipe;
@@ -22,6 +23,7 @@ import com.bobmalouf.recipes.service.RecipeService;
  *
  */
 @RestController
+@RequestMapping("recipes")
 public class RecipeController {
 	
 	private final RecipeService rs;
@@ -31,27 +33,27 @@ public class RecipeController {
 		this.rs = rsIn;
 	}
 	
-	@GetMapping("/recipes")
+	@GetMapping
 	private List<Recipe> getAllRecipes(){
 		return this.rs.getRecipes();
 	}
 	
-	@GetMapping("/recipes/{id}")
+	@GetMapping("{id}")
 	private Recipe getRecipeByName(@PathVariable("id") final String id){
 		return this.rs.getRecipe(id);
 	}
 	
-	@PostMapping("/recipes")
+	@PostMapping
 	private Recipe createRecipe(@RequestBody final Recipe r) throws Exception{
 		return this.rs.createRecipe(r);
 	}
 
-	@PutMapping("/recipes")
+	@PutMapping
 	private Recipe updateRecipe(@RequestBody final Recipe r) throws Exception{
 		return this.rs.updateRecipe(r);
 	}
 	
-	@DeleteMapping("/recipes/{id}")
+	@DeleteMapping("{id}")
 	private boolean deleteRecipe(@PathVariable("id") final String id){
 		return this.rs.deleteRecipe(id);
 	}
