@@ -6,6 +6,8 @@ import { RecipeDTO } from '../model/recipe-dto';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditRecipeComponent } from '../edit-recipe/edit-recipe.component';
 
+import * as lo from 'lodash';
+
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -14,7 +16,7 @@ import { EditRecipeComponent } from '../edit-recipe/edit-recipe.component';
 export class RecipeDetailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private rs: RecipeService, private dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar) {
 
     this.watcher = this.route.params;
 
@@ -62,7 +64,7 @@ export class RecipeDetailComponent implements OnInit {
    */
   public editRecipe(): void {
     this.dialog.open<EditRecipeComponent, RecipeDTO, RecipeDTO>(EditRecipeComponent,
-      {data: this.getRecipe()}).afterClosed().subscribe(sub => {
+      {data: lo(this.getRecipe()).cloneDeep()}).afterClosed().subscribe(sub => {
       if (sub) {
         this.recipe = sub;
         this.snackBar.open(sub.name + ' updated!', 'close', {duration: 3000});

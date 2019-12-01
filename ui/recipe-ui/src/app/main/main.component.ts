@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { EditRecipeComponent } from '../edit-recipe/edit-recipe.component';
 import { RecipeDTO } from '../model/recipe-dto';
@@ -20,14 +20,18 @@ export class MainComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private dialog: MatDialog) {}
+  constructor(private breakpointObserver: BreakpointObserver, private dialog: MatDialog, private snackBar: MatSnackBar ) {}
 
   /**
    * opens new modal to add a new 
    * recipe
    */
   public addRecipe(): void {
-    this.dialog.open<EditRecipeComponent, any, RecipeDTO>(EditRecipeComponent);
+    this.dialog.open<EditRecipeComponent, any, RecipeDTO>(EditRecipeComponent).afterClosed().subscribe(newRecipe => {
+      this.snackBar.open(newRecipe.name + ' created!', 'close', {duration: 3000});
+
+      // insert trigger change in child component for list
+    });
   }
 
 }

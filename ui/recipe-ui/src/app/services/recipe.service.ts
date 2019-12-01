@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { RecipeDTO } from '../model/recipe-dto';
 import { HttpService } from '../shared/services/http.service';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
 
 /**
  * gets recipes
@@ -12,13 +13,33 @@ import { environment } from 'src/environments/environment';
 })
 export class RecipeService {
 
+  /**
+   * subject
+   */
+  private subj = new Subject<RecipeDTO[]>();
+
+
   constructor(private http: HttpService) { }
 
   /**
    * gets all recipes
    */
-  public getRecipes(): Observable<RecipeDTO[]> {
-    return this.http.get<RecipeDTO[]>(environment.apiConfig.serviceEndpoints.recipeService.getRecipes);
+  public getRecipes(): Subject<RecipeDTO[]> {
+    this.getRecipesFromService();
+    return this.subj;
+  }
+
+
+
+  /**
+   * gets all recipes
+   */
+  private getRecipesFromService(): void {
+
+    this.http.get<RecipeDTO[]>(environment.apiConfig.serviceEndpoints.recipeService.getRecipes).subscribe(a => {
+      this.subj.next(a);
+    });
+
   }
 
   /**
@@ -33,12 +54,14 @@ export class RecipeService {
    * @param recipe recipe to save
    */
   public saveRecipe(recipe: RecipeDTO): Observable<RecipeDTO> {
+    let obs: Observable<RecipeDTO>;
     if (recipe.id) {
-      console.warn('updating!!')
-      return this.updateRecipe(recipe);
+      obs =  this.updateRecipe(recipe);
     } else {
-      return this.saveNewRecipe(recipe);
+      obs =  this.saveNewRecipe(recipe);
     }
+    return obs.pipe(tap(() => this.getRecipesFromService()));
+
   }
 
   /**

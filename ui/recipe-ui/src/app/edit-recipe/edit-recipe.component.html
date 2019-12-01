@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     <form class="example-form">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Name" value="{{this.getRecipe()?.name}}">
+            <input matInput placeholder="Name" [(ngModel)]="this.getRecipe().name" name="name">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
