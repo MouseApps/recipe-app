@@ -1,0 +1,15 @@
+mat-card {
+    margin-bottom: 20px;
+}
+
+h1, h5 {
+    margin: 0px 10px 0px 0px;
+}
+h1 ~ h5 {
+        padding-top: 15px;
+    
+}
+
+mat-chip-list {
+    margin: 5px;
+}

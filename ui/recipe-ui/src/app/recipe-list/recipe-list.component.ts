@@ -1,30 +1,59 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { RecipeListDataSource, RecipeListItem } from './recipe-list-datasource';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { RecipeService } from '../services/recipe.service';
+import { RecipeDTO } from '../model/recipe-dto';
+import { HasName } from '../model/has-name';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../shared/component/dialog/dialog.component';
+import { AlertService } from '../shared/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss']
 })
-export class RecipeListComponent implements AfterViewInit, OnInit {
+export class RecipeListComponent implements OnInit {
+  /**
+   * paginator
+   */
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  /**
+   * sorter
+   */
   @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatTable, {static: false}) table: MatTable<RecipeListItem>;
-  dataSource: RecipeListDataSource;
+  /**
+   * table
+   */
+  @ViewChild(MatTable, {static: false}) table: MatTable<HasName>;
+  /**
+   * data source
+   */
+  dataSource: MatTableDataSource<HasName>  = new MatTableDataSource<RecipeDTO>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['name'];
 
+  constructor(private rs: RecipeService, private as: AlertService) {}
+
+
+
+  /**
+   * oninit
+   */
   ngOnInit() {
-    this.dataSource = new RecipeListDataSource();
+    this.rs.getRecipes().subscribe(recipes => {
+      // this.dataSource
+      this.dataSource.data = recipes;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
+    }, err => {
+      this.as.openDialog({title: 'Unable to load recipes', content: err});
+    });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-  }
+
 }

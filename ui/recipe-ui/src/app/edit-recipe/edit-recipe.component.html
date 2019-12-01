@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{this.isNew ? 'New' : 'Edit'}} Recipe</h2>
+<div mat-dialog-content>
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Name" value="{{this.getRecipe()?.name}}">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <textarea matInput placeholder="Leave a comment"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="this.dialogRef.close()">Cancel</button>
+    <button mat-button (click)="this.saveRecipe() "cdkFocusInitial>Save</button>
+</div>
