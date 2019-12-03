@@ -7,22 +7,25 @@
             </mat-chip-list>
             <span class="example-spacer"></span>
             <h5>v{{this.getRecipe()?.version}}</h5>
-            <mat-icon (click)="this.editRecipe()" style="padding: 10px" class="example-icon finger" aria-hidden="false" aria-label="Example heart icon">edit</mat-icon>
+            <mat-icon (click)="this.editRecipe()" style="padding: 10px" class="example-icon finger" aria-hidden="false"
+                aria-label="Example heart icon">edit</mat-icon>
         </div>
     </mat-card>
-    <div fxLayout="row" fxLayoutGap="50px">
+    <div fxLayout.md="row" fxLayoutGap="50px">
         <div fxFlex="50%">
             <mat-card *ngIf="this.getRecipe()?.ingredients?.length > 0">
                 <h2>Ingredients</h2>
                 <mat-list>
-                    <mat-list-item *ngFor="let i of this.getRecipe()?.ingredients"> {{i}} </mat-list-item>
+                    <mat-list-item *ngFor="let i of this.getRecipe()?.ingredients">- {{i}} </mat-list-item>
                 </mat-list>
             </mat-card>
         </div>
         <div fxFlex="50%">
             <mat-card *ngIf="this.getRecipe()?.directions">
                 <h2>Instructions</h2>
-                <p style="white-space: pre-wrap" [innerHTML]="this.getRecipe()?.directions"></p>
+                <mat-list>
+                    <mat-list-item *ngFor="let i of this.getRecipe()?.directions; let c = index">{{c+1}}. {{i}} </mat-list-item>
+                </mat-list>
             </mat-card>
         </div>
     </div>

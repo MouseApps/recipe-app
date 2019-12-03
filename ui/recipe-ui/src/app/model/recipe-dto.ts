@@ -18,17 +18,17 @@ export class RecipeDTO implements HasName {
     /**
      * ingredients
      */
-    ingredients: string[];
+    ingredients: string[] = [];
 
     /**
      * directions
      */
-    directions: string;
+    directions: string[] = [];
 
     /**
      * tags for recipe
      */
-    tags: string[];
+    tags: string[] = [];
 
     /**
      * version of recipe

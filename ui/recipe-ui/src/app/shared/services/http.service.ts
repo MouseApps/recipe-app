@@ -46,6 +46,17 @@ export class HttpService {
     }));
   }
 
+    /**
+   * delete
+   * @param url url of delete
+   * @param body body
+   */
+  public delete<T>(url: string): Observable<T> {
+    return this.httpClient.delete<T>(environment.apiConfig.restURI + url).pipe(catchError(err => {
+      return this.handleError(err);
+    }));
+  }
+
   /**
    * errors
    * @param err any input from the http

@@ -46,7 +46,7 @@ public class Recipe implements DynamoIndexable {
 	@DynamoDBAttribute
 	private List<String> ingredients;
 	@DynamoDBAttribute
-	private String directions;
+	private List<String> directions;
 	@DynamoDBAttribute
 	private List<String> tags;
 	@DynamoDBVersionAttribute
@@ -77,16 +77,17 @@ public class Recipe implements DynamoIndexable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * @return the directions
 	 */
-	public String getDirections() {
+	public List<String> getDirections() {
 		return directions;
 	}
 	/**
 	 * @param directions the directions to set
 	 */
-	public void setDirections(final String directions) {
+	public void setDirections(List<String> directions) {
 		this.directions = directions;
 	}
 	/**

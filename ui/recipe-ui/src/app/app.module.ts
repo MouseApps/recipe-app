@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatIconModule, MatCardModule, MatDialogModule, MatFormFieldModule,
-  MatInputModule, MatChipsModule, MatSnackBarModule } from '@angular/material';
+  MatInputModule, MatChipsModule, MatSnackBarModule, MatStepperModule } from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,7 +24,7 @@ import { HttpService } from './shared/services/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './shared/component/dialog/dialog.component';
 import { SafePipe } from './shared/pipe/safe.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 
 /**
@@ -44,6 +44,7 @@ import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     MatDialogModule,
     BrowserAnimationsModule,
@@ -62,7 +63,8 @@ import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
     MatInputModule,
     MatFormFieldModule,
     MatChipsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule
   ],
   providers: [RecipeService, HttpService],
   bootstrap: [AppComponent],

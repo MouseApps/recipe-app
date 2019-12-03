@@ -63,11 +63,13 @@ export class RecipeDetailComponent implements OnInit {
    * edits the current recipe
    */
   public editRecipe(): void {
-    this.dialog.open<EditRecipeComponent, RecipeDTO, RecipeDTO>(EditRecipeComponent,
-      {data: lo(this.getRecipe()).cloneDeep()}).afterClosed().subscribe(sub => {
-      if (sub) {
+    this.dialog.open<EditRecipeComponent, RecipeDTO, RecipeDTO | boolean>(EditRecipeComponent,
+      {data: lo(this.getRecipe()).cloneDeep(), minWidth: 600}).afterClosed().subscribe(sub => {
+      if (sub instanceof RecipeDTO) {
         this.recipe = sub;
         this.snackBar.open(sub.name + ' updated!', 'close', {duration: 3000});
+      } else if (sub) {
+        this.snackBar.open('Recipe Deleted!', 'close', {duration: 3000});
       }
     });
   }

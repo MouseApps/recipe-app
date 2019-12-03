@@ -1,16 +1,116 @@
 <h2 mat-dialog-title>{{this.isNew ? 'New' : 'Edit'}} Recipe</h2>
 <div mat-dialog-content>
-    <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="Name" [(ngModel)]="this.getRecipe().name" name="name">
-        </mat-form-field>
+    <mat-vertical-stepper [linear]="false" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+            <ng-template matStepLabel>Name</ng-template>
+            <form [formGroup]="firstFormGroup" class="example-form">
+                <!-- start form -->
+                <!-- <form class="example-form"> -->
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Name" formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
 
-        <mat-form-field class="example-full-width">
-            <textarea matInput placeholder="Leave a comment"></textarea>
-        </mat-form-field>
-    </form>
+                    <input matInput placeholder="New Tag" formControlName="newTag">
+                    <button mat-button *ngIf="this.firstFormGroup.controls['newTag'].dirty" matSuffix mat-icon-button
+                        aria-label="Add"
+                        (click)="this.getRecipe().tags.push(this.firstFormGroup.controls['newTag'].value); this.firstFormGroup.controls['newTag'].reset()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let i of this.getRecipe()?.tags">
+                        <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                        (click)="this.getRecipe().tags.splice(this.getRecipe().tags.indexOf(i), 1)">
+                        <mat-icon>delete</mat-icon>
+                        </button>
+                        <mat-chip>{{i}}</mat-chip>
+                    </mat-list-item>
+                </mat-list>
+                <!-- </form> -->
+                <!-- end form -->
+            </form>
+
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>Ingredients</ng-template>
+            <form [formGroup]="secondFormGroup" class="example-form">
+                <!-- start form -->
+                <!-- <form class="example-form"> -->
+
+                <!-- <mat-form-field class="example-full-width"> -->
+                <mat-form-field class="example-full-width">
+
+                    <input matInput placeholder="New Ingredient" formControlName="newIngredient">
+                    <button mat-button *ngIf="this.secondFormGroup.controls['newIngredient'].dirty" matSuffix
+                        mat-icon-button aria-label="Add"
+                        (click)="this.getRecipe().ingredients.push(this.secondFormGroup.controls['newIngredient'].value); this.secondFormGroup.controls['newIngredient'].reset()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let i of this.getRecipe()?.ingredients">
+                        <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                            (click)="this.getRecipe().ingredients.splice(this.getRecipe().ingredients.indexOf(i), 1)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        {{i}} </mat-list-item>
+                </mat-list>
+                <!-- </form> -->
+                <!-- end form -->
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="thirdFormGroup">
+            <ng-template matStepLabel>Directions</ng-template>
+            <form [formGroup]="thirdFormGroup" class="example-form">
+                <!-- start form -->
+                <!-- <form class="example-form"> -->
+
+                <!-- <mat-form-field class="example-full-width"> -->
+                <mat-form-field class="example-full-width">
+
+                    <input matInput placeholder="New Direction" formControlName="newDirection">
+                    <button mat-button *ngIf="this.thirdFormGroup.controls['newDirection'].dirty" matSuffix
+                        mat-icon-button aria-label="Add"
+                        (click)="this.getRecipe().directions.push(this.thirdFormGroup.controls['newDirection'].value); this.thirdFormGroup.controls['newDirection'].reset()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-list>
+                    <mat-list-item *ngFor="let i of this.getRecipe()?.directions">
+                        <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                            (click)="this.getRecipe().directions.splice(this.getRecipe().directions.indexOf(i), 1)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        {{i}} </mat-list-item>
+                </mat-list>
+                <!-- </form> -->
+                <!-- end form -->
+            </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Summary</ng-template>
+            <span class="mat-body-strong">Name: </span>
+            <span class="mat-body">{{this.firstFormGroup.controls['name'].value}}</span><br>
+            <span class="mat-body-strong">Ingredients: </span>
+            <mat-list dense>
+                <mat-list-item *ngFor="let i of this.getRecipe()?.ingredients; let c = index">
+                    {{c+1}}. {{i}} </mat-list-item>
+            </mat-list><Br>
+            <span class="mat-body-strong">Directions: </span>
+            <mat-list dense>
+                <mat-list-item *ngFor="let i of this.getRecipe()?.directions; let c = index">
+                    {{c+1}}. {{i}} </mat-list-item>
+            </mat-list>
+
+        </mat-step>
+    </mat-vertical-stepper>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="this.dialogRef.close()">Cancel</button>
-    <button mat-button (click)="this.saveRecipe() "cdkFocusInitial>Save</button>
+    <button *ngIf="!this.isNew" mat-button (click)="this.deleteRecipe()">Delete</button>
+    <button mat-button (click)="this.saveRecipe() " cdkFocusInitial>Save</button>
 </div>

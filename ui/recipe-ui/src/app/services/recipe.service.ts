@@ -79,4 +79,12 @@ export class RecipeService {
   private updateRecipe(recipe: RecipeDTO): Observable<RecipeDTO> {
     return this.http.put<RecipeDTO>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe, recipe);
   }
+
+    /**
+   * deletes a recipe
+   * @param recipe recipe to save
+   */
+  public deleteRecipe(recipe: RecipeDTO): Observable<Boolean> {
+    return this.http.delete<Boolean>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + recipe.id);
+  }
 }
