@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { RecipeDTO } from '../model/recipe-dto';
 import { HttpService } from '../shared/services/http.service';
 import { environment } from 'src/environments/environment';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 /**
  * gets recipes
@@ -37,7 +37,7 @@ export class RecipeService {
   private getRecipesFromService(): void {
 
     this.http.get<RecipeDTO[]>(environment.apiConfig.serviceEndpoints.recipeService.getRecipes).subscribe(a => {
-      this.subj.next(a);
+      this.subj.next(a.map(a => Object.assign(new RecipeDTO(), a as RecipeDTO)));
     });
 
   }
@@ -46,7 +46,8 @@ export class RecipeService {
    * gets a recipe by id
    */
   public getRecipe(id: string): Observable<RecipeDTO> {
-    return this.http.get<RecipeDTO>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + id);
+    return this.http.get<RecipeDTO>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + id)
+    .pipe(map(a => Object.assign(new RecipeDTO(), a as RecipeDTO)));
   }
 
   /**
@@ -60,7 +61,8 @@ export class RecipeService {
     } else {
       obs =  this.saveNewRecipe(recipe);
     }
-    return obs.pipe(tap(() => this.getRecipesFromService()));
+    return obs.pipe(
+    tap(() => this.getRecipesFromService()), map(a => Object.assign(new RecipeDTO(), a as RecipeDTO)));
 
   }
 
@@ -85,6 +87,7 @@ export class RecipeService {
    * @param recipe recipe to save
    */
   public deleteRecipe(recipe: RecipeDTO): Observable<Boolean> {
-    return this.http.delete<Boolean>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + recipe.id);
+    return this.http.delete<Boolean>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + recipe.id).pipe(
+      tap(() => this.getRecipesFromService()));
   }
 }

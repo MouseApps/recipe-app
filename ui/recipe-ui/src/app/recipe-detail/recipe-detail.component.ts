@@ -15,7 +15,7 @@ import * as lo from 'lodash';
 })
 export class RecipeDetailComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private rs: RecipeService, private dialog: MatDialog,
+  constructor(private router: Router, private route: ActivatedRoute, private rs: RecipeService, private dialog: MatDialog,
               private snackBar: MatSnackBar) {
 
     this.watcher = this.route.params;
@@ -70,6 +70,7 @@ export class RecipeDetailComponent implements OnInit {
         this.snackBar.open(sub.name + ' updated!', 'close', {duration: 3000});
       } else if (sub) {
         this.snackBar.open('Recipe Deleted!', 'close', {duration: 3000});
+        this.router.navigate(['list'])
       }
     });
   }
