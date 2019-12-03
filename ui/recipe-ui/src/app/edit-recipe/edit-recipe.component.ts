@@ -5,6 +5,9 @@ import { RecipeService } from '../services/recipe.service';
 import { AlertService } from '../shared/services/alert.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+/**
+ * edit component
+ */
 @Component({
   selector: 'app-edit-recipe',
   templateUrl: './edit-recipe.component.html',
@@ -26,26 +29,36 @@ export class EditRecipeComponent implements OnInit {
   /**
    * new ingredient
    */
-  public newIngredient: String;
+  public newIngredient: string;
 
   /**
    * new direction
    */
-  public newDirection: String;
+  public newDirection: string;
 
-    /**
+  /**
    * new tag
    */
-  public newTag: String;
+  public newTag: string;
 
+  /**
+   * form group 1
+   */
   firstFormGroup: FormGroup;
+  /**
+   * form group 2
+   */
   secondFormGroup: FormGroup;
+  /**
+   * form group 3
+   */
   thirdFormGroup: FormGroup;
 
 
 
   constructor(public dialogRef: MatDialogRef<EditRecipeComponent, RecipeDTO | boolean>,
-    @Inject(MAT_DIALOG_DATA) private recipeIn: RecipeDTO, private rs: RecipeService, private as: AlertService, private fb: FormBuilder) { }
+              @Inject(MAT_DIALOG_DATA) private recipeIn: RecipeDTO,
+              private rs: RecipeService, private as: AlertService, private fb: FormBuilder) { }
 
   /**
    * called on init
@@ -90,10 +103,13 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+  /**
+   * deletes the recipe
+   */
   public deleteRecipe(): void {
     this.rs.deleteRecipe(this.recipe).subscribe(() => {
       this.dialogRef.close(true);
-    })
+    });
   }
 
 }

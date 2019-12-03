@@ -5,11 +5,12 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { RecipeService } from '../services/recipe.service';
 import { RecipeDTO } from '../model/recipe-dto';
 import { HasName } from '../model/has-name';
-import { MatDialog } from '@angular/material';
-import { DialogComponent } from '../shared/component/dialog/dialog.component';
 import { AlertService } from '../shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+/**
+ * recipe list
+ */
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
@@ -53,7 +54,7 @@ export class RecipeListComponent implements OnInit {
     }, err => {
       this.as.openDialog({title: 'Unable to load recipes', content: err});
     });
-    console.log(this.router.url.split('/'))
+    console.log(this.router.url.split('/'));
   }
 
 

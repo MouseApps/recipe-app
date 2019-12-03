@@ -7,6 +7,9 @@ import { EditRecipeComponent } from '../edit-recipe/edit-recipe.component';
 import { RecipeDTO } from '../model/recipe-dto';
 import { Router } from '@angular/router';
 
+/**
+ * main component
+ */
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -14,16 +17,20 @@ import { Router } from '@angular/router';
 })
 export class MainComponent {
 
+  /**
+   * sees if it's a handset
+   */
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private breakpointObserver: BreakpointObserver, private dialog: MatDialog,
+              private snackBar: MatSnackBar, private router: Router) { }
 
   /**
-   * opens new modal to add a new 
+   * opens new modal to add a new
    * recipe
    */
   public addRecipe(): void {

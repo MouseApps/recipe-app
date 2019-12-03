@@ -37,7 +37,7 @@ export class RecipeService {
   private getRecipesFromService(): void {
 
     this.http.get<RecipeDTO[]>(environment.apiConfig.serviceEndpoints.recipeService.getRecipes).subscribe(a => {
-      this.subj.next(a.map(a => Object.assign(new RecipeDTO(), a as RecipeDTO)));
+      this.subj.next(a.map(b => Object.assign(new RecipeDTO(), b as RecipeDTO)));
     });
 
   }
@@ -82,12 +82,12 @@ export class RecipeService {
     return this.http.put<RecipeDTO>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe, recipe);
   }
 
-    /**
+  /**
    * deletes a recipe
    * @param recipe recipe to save
    */
-  public deleteRecipe(recipe: RecipeDTO): Observable<Boolean> {
-    return this.http.delete<Boolean>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + recipe.id).pipe(
+  public deleteRecipe(recipe: RecipeDTO): Observable<boolean> {
+    return this.http.delete<boolean>(environment.apiConfig.serviceEndpoints.recipeService.getRecipe + '/' + recipe.id).pipe(
       tap(() => this.getRecipesFromService()));
   }
 }

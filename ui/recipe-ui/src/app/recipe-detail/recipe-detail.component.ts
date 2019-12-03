@@ -8,6 +8,9 @@ import { EditRecipeComponent } from '../edit-recipe/edit-recipe.component';
 
 import * as lo from 'lodash';
 
+/**
+ * detail component
+ */
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
