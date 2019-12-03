@@ -8,18 +8,17 @@ phases:
       nodejs: 10
   pre_build:
     commands:
+      - cd ui/recipe-ui
       - echo Installing source NPM dependencies...
       - npm install
       - npm install -g @angular/cli
   build:
     commands:
       - echo Build started on `date`
-      - cd ui/recipe-ui
       - ng lint --fix --type-check
       - ng build --prod --aot
   post_build:
      commands:
-      - cd ui/recipe-ui
       - aws s3 cp dist s3://${S3_BUCKET} --recursive
       - echo Build completed on `date`
 artifacts:
