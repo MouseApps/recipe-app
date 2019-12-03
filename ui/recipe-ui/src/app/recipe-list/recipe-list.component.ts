@@ -8,7 +8,7 @@ import { HasName } from '../model/has-name';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../shared/component/dialog/dialog.component';
 import { AlertService } from '../shared/services/alert.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-list',
@@ -36,7 +36,7 @@ export class RecipeListComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name'];
 
-  constructor(private rs: RecipeService, private as: AlertService) {}
+  constructor(private rs: RecipeService, private as: AlertService, public router: Router) {}
 
 
 
@@ -53,6 +53,7 @@ export class RecipeListComponent implements OnInit {
     }, err => {
       this.as.openDialog({title: 'Unable to load recipes', content: err});
     });
+    console.log(this.router.url.split('/'))
   }
 
 

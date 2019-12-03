@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditRecipeComponent } from '../edit-recipe/edit-recipe.component';
 import { RecipeDTO } from '../model/recipe-dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -19,7 +20,7 @@ export class MainComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private breakpointObserver: BreakpointObserver, private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) { }
 
   /**
    * opens new modal to add a new 
@@ -30,6 +31,7 @@ export class MainComponent {
 
       if (newRecipe instanceof RecipeDTO) {
         this.snackBar.open(newRecipe.name + ' created!', 'close', { duration: 3000 });
+        this.router.navigate(['list', newRecipe.id]);
       }
       // insert trigger change in child component for list
     });

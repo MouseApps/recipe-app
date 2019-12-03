@@ -27,6 +27,12 @@
     </div>
   </div>
   <div fxFlex="100%" [ngStyle]="{padding: '20px'}">
+      <mat-card *ngIf="this.router.url.split('/').length < 3">
+          <div fxLayout="row">
+              <h1>Select a recipe</h1>
+
+          </div>
+      </mat-card>
     <router-outlet></router-outlet>
   </div>
 
