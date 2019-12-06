@@ -16,7 +16,7 @@ Resources:
       CodeUri: target/recipes-application-0.0.1-SNAPSHOT.jar
       MemorySize: 512
       Policies: AWSLambdaBasicExecutionRole
-      Timeout: 60
+      Timeout: 30
       Events:
         GetResource:
           Type: Api
