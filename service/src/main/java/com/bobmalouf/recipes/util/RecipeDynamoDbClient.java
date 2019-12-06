@@ -7,11 +7,10 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.bobmalouf.recipes.model.DynamoIndexable;
 
 
 
-public class RecipeDynamoDbClient<T extends DynamoIndexable> {
+public class RecipeDynamoDbClient<T extends DynamoIndexable<?>> {
 
 	private final AmazonDynamoDB client;
 	private final DynamoDBMapper mapper;

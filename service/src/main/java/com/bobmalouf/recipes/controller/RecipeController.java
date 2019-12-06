@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bobmalouf.recipes.model.Recipe;
+import com.bobmalouf.recipes.dto.RecipeDTO;
 import com.bobmalouf.recipes.service.RecipeService;
 
 /**
@@ -34,22 +34,22 @@ public class RecipeController {
 	}
 	
 	@GetMapping
-	private List<Recipe> getAllRecipes(){
+	private List<RecipeDTO> getAllRecipes(){
 		return this.rs.getRecipes();
 	}
 	
 	@GetMapping("{id}")
-	private Recipe getRecipeByName(@PathVariable("id") final String id){
+	private RecipeDTO getRecipeByName(@PathVariable("id") final String id){
 		return this.rs.getRecipe(id);
 	}
 	
 	@PostMapping
-	private Recipe createRecipe(@RequestBody final Recipe r) throws Exception{
+	private RecipeDTO createRecipe(@RequestBody final RecipeDTO r) throws Exception{
 		return this.rs.createRecipe(r);
 	}
 
 	@PutMapping
-	private Recipe updateRecipe(@RequestBody final Recipe r) throws Exception{
+	private RecipeDTO updateRecipe(@RequestBody final RecipeDTO r) throws Exception{
 		return this.rs.updateRecipe(r);
 	}
 	
