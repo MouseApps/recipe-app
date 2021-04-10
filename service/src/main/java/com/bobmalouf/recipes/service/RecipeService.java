@@ -7,7 +7,7 @@ package com.bobmalouf.recipes.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.bobmalouf.recipes.model.Recipe;
+import com.bobmalouf.recipes.dto.RecipeDTO;
 
 
 /**
@@ -16,13 +16,13 @@ import com.bobmalouf.recipes.model.Recipe;
  */
 public interface RecipeService {
 	
-	List<Recipe> getRecipes();
+	List<RecipeDTO> getRecipes();
 	
-	Recipe getRecipe(final String idIn);
+	RecipeDTO getRecipe(final String idIn);
 	
-	Recipe createRecipe(final Recipe r);
+	RecipeDTO createRecipe(final RecipeDTO r);
 	
-	Recipe updateRecipe(final Recipe r) throws NoSuchElementException;
+	RecipeDTO updateRecipe(final RecipeDTO r) throws NoSuchElementException;
 	
 	boolean deleteRecipe(final String idIn);
 
